@@ -5,7 +5,7 @@ function preload() {
 
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
-    game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 32, 32);
+    game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 31, 31);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
@@ -58,8 +58,8 @@ function create() {
     //player.body.setSize(20, 32, -5, -16);
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, true);
-    player.animations.add('girlfront', [1], 20, true);
-    player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
+    player.animations.add('girlfront', [1], 15, false);
+    player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, false);
     player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, true);
     player.animations.add('girlidle', [0], 20, true);
 
@@ -83,9 +83,7 @@ function update() {
         if (facing != 'left')
         {
             player.animations.play('girlfront')
-            player.animations.play('walk');
-            player.scale.setTo(-2,2);
-            facing = 'left';
+
         }
     }
     else if (cursors.right.isDown)
@@ -95,7 +93,7 @@ function update() {
         if (facing != 'right')
         {
             player.animations.play('girlfront')
-            player.animations.play('walk');
+            player.animations.play('walk')
             player.scale.setTo(2,2);
             facing = 'right';
         }
@@ -127,6 +125,13 @@ function update() {
         player.body.velocity.y = -250;
         jumpTimer = game.time.now + 750;
     }
+
+                if(player.animations.getAnimation('girlfront').isFinished)
+            {
+                player.animations.play('walk')
+                player.scale.setTo(-2,2);
+                facing = 'left';
+            }
 
 }
 
