@@ -8,10 +8,10 @@ function preload() {
     game.load.spritesheet('girlwalking', 'assets/walking.png', 30, 30);
     game.load.spritesheet('girlfalling', 'assets/falling.png', 30, 30);
     game.load.spritesheet('girlland', 'assets/land.png', 30, 30);
+    game.load.spritesheet('girlfront', 'assets/front.png', 30, 30);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('girlidle', 'assets/idle.png');
     game.load.image('starSmall', 'assets/star.png');
-    game.load.spritesheet('girlfront', 'assets/front.png', 30, 30);
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
 
@@ -26,7 +26,6 @@ var jumpTimer = 0;
 var cursors;
 var jumpButton;
 var bg;
-var turning;
 
 function create() {
      game.stage.smoothed = false;
@@ -64,6 +63,7 @@ function create() {
 
     player.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
     player.animations.add('girlfront', [0], 20, true);
+    player.animations.add('girlfalling', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 
     game.camera.follow(player);
 
@@ -84,16 +84,10 @@ function update() {
 
         if (facing != 'left')
         {
-            turning = true;
-            //game.time.events.add(Phaser.Timer.SECOND * 0.1, turngirl, this);
-            //if(turning){
-                player.animations.play('girlfront')
-            //}
-            /*else{
-                player.animations.play('walk');
-                player.scale.setTo(-2,2);
-                facing = 'left';
-            }*/
+            player.animations.play('girlfalling')
+            //player.animations.play('walk');
+            player.scale.setTo(-2,2);
+            facing = 'left';
         }
     }
     else if (cursors.right.isDown)
@@ -102,19 +96,15 @@ function update() {
 
         if (facing != 'right')
         {
-            if(turning){
-                player.animations.play('girlfront');
-            }
-            else{
-                player.animations.play('walk');
-                player.scale.setTo(2,2);
-                facing = 'right';
-            }
+            player.animations.play('girlfalling');
+            //player.animations.play('walk');
+            player.scale.setTo(2,2);
+            facing = 'right';
         }
     }
     else
     {
-        if (facing != 'idle')
+        /*if (facing != 'idle')
         {
             player.animations.stop();
 
@@ -128,7 +118,7 @@ function update() {
             }
 
             facing = 'idle';
-        }
+        }*/
     }
     
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
@@ -144,8 +134,4 @@ function render () {
     // game.debug.body(player);
     // game.debug.bodyInfo(player, 16, 24);
 
-}
-
-function turngirl(){
-    turning = false;
 }
