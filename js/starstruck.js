@@ -5,12 +5,8 @@ function preload() {
 
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
-    game.load.spritesheet('girlwalking', 'assets/walking.png', 30, 30);
-    game.load.spritesheet('girlfalling', 'assets/falling.png', 30, 30);
-    game.load.spritesheet('girlland', 'assets/land.png', 30, 30);
-    game.load.spritesheet('girlfront', 'assets/front.png', 30, 30);
+    game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 32, 32);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
-    game.load.image('girlidle', 'assets/idle.png');
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
@@ -52,7 +48,7 @@ function create() {
 
     game.physics.arcade.gravity.y = 250;
 
-    player = game.add.sprite(30, 30, 'girlwalking');
+    player = game.add.sprite(30, 30, 'girlspritesheet');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
@@ -61,9 +57,11 @@ function create() {
     player.body.collideWorldBounds = true;
     //player.body.setSize(20, 32, -5, -16);
 
-    player.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
-    player.animations.add('girlfront', [0], 20, true);
-    player.animations.add('girlfalling', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
+    player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, true);
+    player.animations.add('girlfront', [1], 20, true);
+    player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
+    player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, true);
+    player.animations.add('girlidle', [0], 20, true);
 
     game.camera.follow(player);
 
@@ -84,8 +82,8 @@ function update() {
 
         if (facing != 'left')
         {
-            player.animations.play('girlfalling')
-            //player.animations.play('walk');
+            player.animations.play('girlfront')
+            player.animations.play('walk');
             player.scale.setTo(-2,2);
             facing = 'left';
         }
@@ -96,29 +94,32 @@ function update() {
 
         if (facing != 'right')
         {
-            player.animations.play('girlfalling');
-            //player.animations.play('walk');
+            player.animations.play('girlfront')
+            player.animations.play('walk');
             player.scale.setTo(2,2);
             facing = 'right';
         }
     }
     else
     {
-        /*if (facing != 'idle')
+        if (facing != 'idle')
         {
             player.animations.stop();
 
             if (facing == 'left')
-            {
-                player.frame = 0;
+            {  
+                player.scale.setTo(-2,2);
+                player.animations.play('girlidle');
             }
             else
             {
-                player.frame = 5;
+                player.scale.setTo(2,2);
+                player.animations.play('girlidle');
+
             }
 
             facing = 'idle';
-        }*/
+        }
     }
     
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
