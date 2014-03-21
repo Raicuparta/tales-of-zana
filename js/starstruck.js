@@ -1,11 +1,13 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
-    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.spritesheet('girlwalking', 'assets/walking.png', 30, 30);
+    game.load.spritesheet('girlfalling', 'assets/falling.png', 30, 30);
+    game.load.spritesheet('girlland', 'assets/land.png', 30, 30);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
@@ -24,6 +26,7 @@ var jumpButton;
 var bg;
 
 function create() {
+     game.stage.smoothed = false;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -47,16 +50,17 @@ function create() {
 
     game.physics.arcade.gravity.y = 250;
 
-    player = game.add.sprite(32, 32, 'dude');
+    player = game.add.sprite(30, 30, 'girlwalking');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
+    player.anchor.setTo(.5,.5);
+    player.scale.setTo(2,2);
     player.body.bounce.y = 0.2;
     player.body.collideWorldBounds = true;
-    player.body.setSize(20, 32, -5, -16);
+    //player.body.setSize(20, 32, -5, -16);
 
-    player.animations.add('left', [0, 1, 2, 3], 10, true);
+    player.animations.add('walk', [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
     player.animations.add('turn', [4], 20, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
 
     game.camera.follow(player);
 
@@ -77,7 +81,8 @@ function update() {
 
         if (facing != 'left')
         {
-            player.animations.play('left');
+            player.animations.play('walk');
+            player.scale.setTo(-2,2);
             facing = 'left';
         }
     }
@@ -87,7 +92,8 @@ function update() {
 
         if (facing != 'right')
         {
-            player.animations.play('right');
+            player.animations.play('walk');
+            player.scale.setTo(2,2);
             facing = 'right';
         }
     }
