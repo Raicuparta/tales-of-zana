@@ -87,7 +87,7 @@ function create() {
 
     //TEXT
 
-    text = game.add.text(player.x+200, 300, 'Ola', { font: "bold 40pt Arial", fill: "111111", align: "center", stroke: "e2e2e2", strokeThickness: 8});
+    text = game.add.text(player.x+200, 300, 'Ola', { font: "40pt Fixedsys", fill: "white", align: "center"});
     text.alpha = 0;
     text.anchor.setTo(0.5, 0.5);
     game.add.tween(text).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 100, false);
