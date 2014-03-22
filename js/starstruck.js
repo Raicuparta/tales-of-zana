@@ -18,6 +18,7 @@ var tileset;
 var layer;
 var player;
 var facing = 'left';
+var idle = true;
 var jumpTimer = 0;
 var cursors;
 var jumpButton;
@@ -58,7 +59,7 @@ function create() {
     //player.body.setSize(20, 32, -5, -16);
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, true);
-    player.animations.add('girlfront', [1], 15, false);
+    player.animations.add('girlfront', [1], 10, false);
     player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, false);
     player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, true);
     player.animations.add('girlidle', [0], 20, true);
@@ -83,6 +84,8 @@ function update() {
         if (facing != 'left')
         {
             player.animations.play('girlfront')
+            player.scale.setTo(-2,2);
+            facing = 'left';
 
         }
     }
@@ -93,30 +96,17 @@ function update() {
         if (facing != 'right')
         {
             player.animations.play('girlfront')
-            player.animations.play('walk')
             player.scale.setTo(2,2);
             facing = 'right';
         }
     }
     else
     {
-        if (facing != 'idle')
+        player.animations.play('girlidle');
+        if (!idle)
         {
             player.animations.stop();
-
-            if (facing == 'left')
-            {  
-                player.scale.setTo(-2,2);
-                player.animations.play('girlidle');
-            }
-            else
-            {
-                player.scale.setTo(2,2);
-                player.animations.play('girlidle');
-
-            }
-
-            facing = 'idle';
+            idle = true;
         }
     }
     
@@ -126,12 +116,10 @@ function update() {
         jumpTimer = game.time.now + 750;
     }
 
-                if(player.animations.getAnimation('girlfront').isFinished)
-            {
-                player.animations.play('walk')
-                player.scale.setTo(-2,2);
-                facing = 'left';
-            }
+    if(player.animations.getAnimation('girlfront').isFinished && (cursors.left.isDown || cursors.right.isDown))
+    {
+        player.animations.play('walk')
+    }
 
 }
 
