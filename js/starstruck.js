@@ -27,6 +27,7 @@ var bg;
 var fall = false;
 var playerSpeed = 100;
 var scale = 1;
+var playerIdle = true;
 
 function create() {
     game.stage.smoothed = false;
@@ -76,6 +77,7 @@ function create() {
 }
 
 function update() {
+    playerIdle = true;
 
     game.physics.arcade.collide(player, layer, fallAnimation);
 
@@ -87,6 +89,7 @@ function update() {
 
         if (facing != 'left')
         {
+            playerIdle = false;
             player.animations.play('girlfront')
             player.scale.setTo(-scale,scale);
             facing = 'left';
@@ -98,12 +101,13 @@ function update() {
 
         if (facing != 'right')
         {
+            playerIdle = false;
             player.animations.play('girlfront')
             player.scale.setTo(scale);
             facing = 'right';
         }
     }
-    else if (player.body.velocity.y == 0 && player.body.velocity.x == 0)
+    else if (player.body.velocity.y == 0 && player.body.velocity.x == 0 && playerIdle == true)
     {
         player.animations.play('girlidle');
     }
@@ -116,19 +120,22 @@ function update() {
 
     if(player.animations.getAnimation('girlfront').isFinished && (cursors.left.isDown || cursors.right.isDown) && player.body.velocity.y == 0)
     {
+        playerIdle = false;
         player.animations.play('walk');
     }
 
+    if(player.body.velocity.y > 50) {
+        fall = true;
+    }
+
     if(player.body.velocity.y > 0) {
+        playerIdle = false;
         player.animations.play('girlfalling');
     }
 
     if(player.body.velocity.y < -250) {
+        playerIdle = false;
         player.animations.play('girljump');
-    }
-
-    if(player.body.velocity.y > 100) {
-        fall = true;
     }
 
     /*if(player.animations.getAnimation('girlland').isFinished) {
