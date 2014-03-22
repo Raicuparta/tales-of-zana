@@ -7,7 +7,7 @@ function preload() {
 
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
-    game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 31, 31);
+    game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 62, 62);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
@@ -26,7 +26,7 @@ var jumpButton;
 var bg;
 var fall = false;
 var playerSpeed = 100;
-var scale = 2;
+var scale = 1;
 
 function create() {
     game.stage.smoothed = false;
@@ -57,7 +57,7 @@ function create() {
     player.anchor.setTo(.5,.5);
     player.body.collideWorldBounds = true;
     player.scale.setTo(scale);
-    player.body.setSize(10, 26, 0, 2);
+    player.body.setSize(20, 50, 0, 7);
 
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
@@ -90,7 +90,6 @@ function update() {
             player.animations.play('girlfront')
             player.scale.setTo(-scale,scale);
             facing = 'left';
-
         }
     }
     else if (cursors.right.isDown)
@@ -111,7 +110,7 @@ function update() {
     
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
     {
-        player.body.velocity.y = -250;
+        player.body.velocity.y = -400;
         //jumpTimer = game.time.now + 500;
     }
 
