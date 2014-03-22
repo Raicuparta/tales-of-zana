@@ -79,83 +79,69 @@ function create() {
 function update() {
     playerIdle = true;
 
-    game.physics.arcade.collide(player, layer, fallAnimation);
+    game.physics.arcade.collide(player, layer);
 
     player.body.velocity.x = 0;
 
-    if (cursors.left.isDown)
-    {
-        player.body.velocity.x = -playerSpeed;
-
-        if (facing != 'left')
-        {
-            playerIdle = false;
-            player.animations.play('girlfront')
-            player.scale.setTo(-scale,scale);
-            facing = 'left';
-        }
+    if (cursors.left.isDown) {
+            player.body.velocity.x = -playerSpeed;
+            player.scale.x = -scale;
     }
-    else if (cursors.right.isDown)
-    {
-        player.body.velocity.x = playerSpeed;
-
-        if (facing != 'right')
-        {
-            playerIdle = false;
-            player.animations.play('girlfront')
-            player.scale.setTo(scale);
-            facing = 'right';
-        }
-    }
-    else if (player.body.velocity.y == 0 && player.body.velocity.x == 0 && playerIdle == true)
-    {
-        player.animations.play('girlidle');
+    else if (cursors.right.isDown) {
+            player.body.velocity.x = playerSpeed;
+            player.scale.x = scale;
     }
     
-    if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
-    {
-        player.body.velocity.y = -400;
-        //jumpTimer = game.time.now + 500;
+
+    if(player.animations.getAnimation('girlland').onComplete) {
+        fall = false;
     }
 
-    if(player.animations.getAnimation('girlfront').isFinished && (cursors.left.isDown || cursors.right.isDown) && player.body.velocity.y == 0)
-    {
-        playerIdle = false;
-        player.animations.play('walk');
-    }
-
-    if(player.body.velocity.y > 50) {
+    if(player.body.velocity.y > 300) {
         fall = true;
     }
+    
 
-    if(player.body.velocity.y > 0) {
-        playerIdle = false;
-        player.animations.play('girlfalling');
+    //ANIMACOES
+    if (player.body.onFloor()) {
+        if (cursors.up.isDown)
+        {
+            player.body.velocity.y = -400;
+            player.animations.play('girljump');
+            //jumpTimer = game.time.now + 500;
+        }
+
+        else if (player.body.velocity.x != 0) {
+            if (fall) {
+                player.animations.play('girlland');
+            }
+            else
+            {
+                player.animations.play('walk');
+            }
+        }
+        else if (player.body.velocity.x == 0 && fall) {
+            player.animations.play('girlland');
+        }
+
+        else {
+            player.animations.play('girlidle');
+        }
+
     }
-
-    if(player.body.velocity.y < -250) {
-        playerIdle = false;
-        player.animations.play('girljump');
+    else
+    {
+        if (player.body.velocity.y > 0) {
+            player.animations.play('girlfalling');
+        }
     }
-
-    /*if(player.animations.getAnimation('girlland').isFinished) {
-        fall = false;
-    }/*««*/
 
 }
 
 function render () {
 
-    game.debug.body(player);
+    //game.debug.body(player);
     game.debug.bodyInfo(player, 16, 24);
     //layer.debug = true;
-
-}
-
-function fallAnimation () {
-    if(fall) {
-        player.animations.play('girlland');
-        fall = false;
-    }
 
 }
