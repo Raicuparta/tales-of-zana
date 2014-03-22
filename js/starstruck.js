@@ -42,8 +42,6 @@ function create() {
 
     layer = map.createLayer('Tile Layer 1');
 
-    //  Un-comment this on to see the collision tiles
-    // layer.debug = true;
 
     layer.resizeWorld();
 
@@ -138,7 +136,8 @@ function update() {
 function render () {
 
     //game.debug.body(player);
-    game.debug.bodyInfo(player, 16, 24);
+    //game.debug.bodyInfo(player, 16, 24);
+    //layer.debug = true;
 
 }
 
