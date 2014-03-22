@@ -1,9 +1,8 @@
 
-var game = new Phaser.Game(320, 240, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render }, false, false);
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render }, false, false);
 
 function preload() {
 
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.scale.refresh();
 
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
@@ -27,6 +26,7 @@ var jumpButton;
 var bg;
 var fall = false;
 var playerSpeed = 100;
+var scale = 2;
 
 function create() {
     game.stage.smoothed = false;
@@ -45,18 +45,20 @@ function create() {
     map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
 
     layer = map.createLayer('Tile Layer 1');
-
+    layer.scale.setTo(scale);
 
     layer.resizeWorld();
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(30, 30, 'girlspritesheet');
+    player = game.add.sprite(50, 50, 'girlspritesheet');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
     player.body.collideWorldBounds = true;
+    player.scale.setTo(scale);
     player.body.setSize(10, 26, 0, 2);
+
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
@@ -86,7 +88,7 @@ function update() {
         if (facing != 'left')
         {
             player.animations.play('girlfront')
-            player.scale.setTo(-1,1);
+            player.scale.setTo(-scale,scale);
             facing = 'left';
 
         }
@@ -98,7 +100,7 @@ function update() {
         if (facing != 'right')
         {
             player.animations.play('girlfront')
-            player.scale.setTo(1,1);
+            player.scale.setTo(scale);
             facing = 'right';
         }
     }
@@ -138,8 +140,8 @@ function update() {
 
 function render () {
 
-    //game.debug.body(player);
-    //game.debug.bodyInfo(player, 16, 24);
+    game.debug.body(player);
+    game.debug.bodyInfo(player, 16, 24);
     //layer.debug = true;
 
 }
