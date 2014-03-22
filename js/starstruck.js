@@ -1,7 +1,10 @@
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(320, 240, Phaser.AYUTO, '', { preload: preload, create: create, update: update, render: render }, false, false);
 
 function preload() {
+
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.refresh();
 
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
@@ -23,9 +26,10 @@ var cursors;
 var jumpButton;
 var bg;
 var fall = false;
+var playerSpeed = 100;
 
 function create() {
-     game.stage.smoothed = false;
+    game.stage.smoothed = false;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -51,9 +55,8 @@ function create() {
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
-    player.scale.setTo(2,2);
     player.body.collideWorldBounds = true;
-    player.body.setSize(26, 50, 13, 19);
+    player.body.setSize(10, 26, 0, 2);
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
@@ -78,39 +81,39 @@ function update() {
 
     if (cursors.left.isDown)
     {
-        player.body.velocity.x = -150;
+        player.body.velocity.x = -playerSpeed;
 
         if (facing != 'left')
         {
             player.animations.play('girlfront')
-            player.scale.setTo(-2,2);
+            player.scale.setTo(-1,1);
             facing = 'left';
 
         }
     }
     else if (cursors.right.isDown)
     {
-        player.body.velocity.x = 150;
+        player.body.velocity.x = playerSpeed;
 
         if (facing != 'right')
         {
             player.animations.play('girlfront')
-            player.scale.setTo(2,2);
+            player.scale.setTo(1,1);
             facing = 'right';
         }
     }
     else if (player.body.velocity.y == 0 && player.body.velocity.x == 0)
     {
-        //player.animations.play('girlidle');
+        player.animations.play('girlidle');
     }
     
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
     {
-        player.body.velocity.y = -500;
-        jumpTimer = game.time.now + 750;
+        player.body.velocity.y = -250;
+        //jumpTimer = game.time.now + 500;
     }
 
-    if(player.animations.getAnimation('girlfront').isFinished && (cursors.left.isDown || cursors.right.isDown))
+    if(player.animations.getAnimation('girlfront').isFinished && (cursors.left.isDown || cursors.right.isDown) && player.body.velocity.y == 0)
     {
         player.animations.play('walk');
     }
