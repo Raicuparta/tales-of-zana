@@ -17,7 +17,9 @@ function preload() {
 
 var map;
 var tileset;
-var layer;
+var layer1;
+/*var layer2;
+var layer3*/
 var player;
 var facing = 'left';
 var jumpTimer = 0;
@@ -46,10 +48,17 @@ function create() {
 
     map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
 
-    layer = map.createLayer('Tile Layer 1');
-    layer.scale.setTo(scale);
+    layer1 = map.createLayer('Tile Layer 1');
+    layer1.scale.setTo(scale);
+    layer1.resizeWorld();
 
-    layer.resizeWorld();
+   /* layer2 = map.createLayer('Tile Layer 2');
+    layer2.scale.setTo(scale);
+    layer2.resizeWorld();
+
+    layer3 = map.createLayer('Tile Layer 3');
+    layer3.scale.setTo(scale);
+    layer3.resizeWorld();*/
 
     game.physics.arcade.gravity.y = 1000;
 
@@ -81,7 +90,9 @@ function create() {
 function update() {
     playerIdle = true;
 
-    game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(player, layer1);
+   /* game.physics.arcade.collide(player, layer2);
+    game.physics.arcade.collide(player, layer3);*/
 
     player.body.velocity.x = 0;
 
