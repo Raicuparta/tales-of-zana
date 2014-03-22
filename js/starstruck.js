@@ -17,9 +17,7 @@ function preload() {
 
 var map;
 var tileset;
-var layer1;
-/*var layer2;
-var layer3*/
+var layer;
 var player;
 var facing = 'left';
 var jumpTimer = 0;
@@ -48,21 +46,14 @@ function create() {
 
     map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
 
-    layer1 = map.createLayer('Tile Layer 1');
-    layer1.scale.setTo(scale);
-    layer1.resizeWorld();
+    layer = map.createLayer('Tile Layer 1');
+    layer.scale.setTo(scale);
 
-   /* layer2 = map.createLayer('Tile Layer 2');
-    layer2.scale.setTo(scale);
-    layer2.resizeWorld();
-
-    layer3 = map.createLayer('Tile Layer 3');
-    layer3.scale.setTo(scale);
-    layer3.resizeWorld();*/
+    layer.resizeWorld();
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(50, 50, 'girlspritesheet');
+    player = game.add.sprite(50, 400, 'girlspritesheet');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
@@ -85,14 +76,20 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+    //TEXT
+
+    text = game.add.text(player.x+200, 300, 'Ola', { font: "bold 40pt Arial", fill: "111111", align: "center", stroke: "e2e2e2", strokeThickness: 8});
+    text.alpha = 0;
+    text.anchor.setTo(0.5, 0.5);
+    game.add.tween(text).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 100, false);
+    game.add.tween(text).to({y: 250}, 2000, Phaser.Easing.Out, true,100, false);
+    
 }
 
 function update() {
     playerIdle = true;
 
-    game.physics.arcade.collide(player, layer1);
-   /* game.physics.arcade.collide(player, layer2);
-    game.physics.arcade.collide(player, layer3);*/
+    game.physics.arcade.collide(player, layer);
 
     player.body.velocity.x = 0;
 
