@@ -57,11 +57,13 @@ function create() {
     player.body.collideWorldBounds = true;
     player.body.setSize(26, 50, 13, 19);
 
-    player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, false);
+    player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
     player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
     player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, false);
     player.animations.add('girlidle', [0], 20, true);
+    player.animations.add('girljump', [28, 29, 30], 10, false);
+
 
     game.camera.follow(player);
 
@@ -119,6 +121,10 @@ function update() {
         player.animations.play('girlfalling');
     }
 
+    if(player.body.velocity.y < -250) {
+        player.animations.play('girljump');
+    }
+
     if(player.body.velocity.y > 100) {
         fall = true;
     }
@@ -131,7 +137,7 @@ function update() {
 
 function render () {
 
-    game.debug.body(player);
+    //game.debug.body(player);
     game.debug.bodyInfo(player, 16, 24);
 
 }
