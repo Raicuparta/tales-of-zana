@@ -29,6 +29,7 @@ var playerSpeed = 100;
 var scale = 1;
 var playerIdle = true;
 
+
 function create() {
     game.stage.smoothed = false;
 
@@ -68,6 +69,7 @@ function create() {
     player.animations.add('girlidle', [0], 20, true);
     player.animations.add('girljump', [28, 29, 30], 10, false);
 
+    player.animations.getAnimation('girlland').onComplete.add(finishLand);
 
     game.camera.follow(player);
 
@@ -84,17 +86,14 @@ function update() {
     player.body.velocity.x = 0;
 
     if (cursors.left.isDown) {
-            player.body.velocity.x = -playerSpeed;
-            player.scale.x = -scale;
+        player.body.velocity.x = -playerSpeed;
+        player.scale.x = -scale;
+        facing = "left";
     }
     else if (cursors.right.isDown) {
-            player.body.velocity.x = playerSpeed;
-            player.scale.x = scale;
-    }
-    
-
-    if(player.animations.getAnimation('girlland').onComplete) {
-        fall = false;
+        player.body.velocity.x = playerSpeed;
+        player.scale.x = scale;
+        facing = "right";
     }
 
     if(player.body.velocity.y > 300) {
@@ -136,6 +135,11 @@ function update() {
         }
     }
 
+}
+
+
+function finishLand () {
+    fall = false;
 }
 
 function render () {
