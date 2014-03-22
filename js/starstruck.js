@@ -18,11 +18,11 @@ var tileset;
 var layer;
 var player;
 var facing = 'left';
-var idle = true;
 var jumpTimer = 0;
 var cursors;
 var jumpButton;
 var bg;
+var fall = false;
 
 function create() {
      game.stage.smoothed = false;
@@ -54,14 +54,13 @@ function create() {
 
     player.anchor.setTo(.5,.5);
     player.scale.setTo(2,2);
-    player.body.bounce.y = 0.2;
     player.body.collideWorldBounds = true;
     //player.body.setSize(20, 32, -5, -16);
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, true);
     player.animations.add('girlfront', [1], 10, false);
-    player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, false);
-    player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, true);
+    player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
+    player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, false);
     player.animations.add('girlidle', [0], 20, true);
 
     game.camera.follow(player);
@@ -73,7 +72,7 @@ function create() {
 
 function update() {
 
-    game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(player, layer, fallAnimation);
 
     player.body.velocity.x = 0;
 
@@ -100,14 +99,9 @@ function update() {
             facing = 'right';
         }
     }
-    else
+    else if (player.body.velocity.y <= 0 && !fall)
     {
         player.animations.play('girlidle');
-        if (!idle)
-        {
-            player.animations.stop();
-            idle = true;
-        }
     }
     
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
@@ -118,14 +112,34 @@ function update() {
 
     if(player.animations.getAnimation('girlfront').isFinished && (cursors.left.isDown || cursors.right.isDown))
     {
-        player.animations.play('walk')
+        player.animations.play('walk');
     }
+
+    if(player.body.velocity.y > 0) {
+        player.animations.play('girlfalling');
+    }
+
+    if(player.body.velocity.y > 100) {
+        fall = true;
+    }
+
+    if(player.animations.getAnimation('girlland').isFinished) {
+        fall = false;
+    }
+     game.physics.arcade.collide(player, layer, fallAnimation);
 
 }
 
 function render () {
 
     // game.debug.body(player);
-    // game.debug.bodyInfo(player, 16, 24);
+    game.debug.bodyInfo(player, 16, 24);
+
+}
+
+function fallAnimation () {
+    if(fall) {
+        player.animations.play('girlland');
+    }
 
 }
