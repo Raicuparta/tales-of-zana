@@ -47,7 +47,7 @@ function create() {
 
     layer.resizeWorld();
 
-    game.physics.arcade.gravity.y = 250;
+    game.physics.arcade.gravity.y = 1000;
 
     player = game.add.sprite(30, 30, 'girlspritesheet');
     game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -55,9 +55,9 @@ function create() {
     player.anchor.setTo(.5,.5);
     player.scale.setTo(2,2);
     player.body.collideWorldBounds = true;
-    //player.body.setSize(20, 32, -5, -16);
+    player.body.setSize(26, 50, 13, 19);
 
-    player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, true);
+    player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8], 15, false);
     player.animations.add('girlfront', [1], 10, false);
     player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
     player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, false);
@@ -99,14 +99,14 @@ function update() {
             facing = 'right';
         }
     }
-    else if (player.body.velocity.y <= 0 && !fall)
+    else if (player.body.velocity.y == 0 && player.body.velocity.x == 0)
     {
-        player.animations.play('girlidle');
+        //player.animations.play('girlidle');
     }
     
     if (jumpButton.isDown && player.body.onFloor() && game.time.now > jumpTimer)
     {
-        player.body.velocity.y = -250;
+        player.body.velocity.y = -500;
         jumpTimer = game.time.now + 750;
     }
 
@@ -123,16 +123,15 @@ function update() {
         fall = true;
     }
 
-    if(player.animations.getAnimation('girlland').isFinished) {
+    /*if(player.animations.getAnimation('girlland').isFinished) {
         fall = false;
-    }
-     game.physics.arcade.collide(player, layer, fallAnimation);
+    }/*««*/
 
 }
 
 function render () {
 
-    // game.debug.body(player);
+    game.debug.body(player);
     game.debug.bodyInfo(player, 16, 24);
 
 }
@@ -140,6 +139,7 @@ function render () {
 function fallAnimation () {
     if(fall) {
         player.animations.play('girlland');
+        fall = false;
     }
 
 }
