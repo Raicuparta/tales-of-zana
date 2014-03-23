@@ -19,7 +19,6 @@ var layer1;
 var layer2;
 var layer3;
 var facing = 'left';
-var jumpTimer = 0;
 var cursors;
 var jumpButton;
 var bg;
@@ -27,6 +26,7 @@ var fall = false;
 var playerSpeed = 100;
 var scale = 1;
 var playerIdle = true;
+var fallTimer = 0;
 
 
 function create() {
@@ -42,12 +42,18 @@ function create() {
     map = game.add.tilemap('level1');
 
     map.addTilesetImage('tiles-1');
+    map.setLayer(layer1);
 
-    map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
+
+    layer2 = map.createLayer('Tile Layer 2');
+    layer2.scale.setTo(scale);
+    layer2.resizeWorld();
 
     layer1 = map.createLayer('Tile Layer 1');
     layer1.scale.setTo(scale);
     layer1.resizeWorld();
+
+    map.setCollisionByExclusion([], true, layer1);
 
     game.physics.arcade.gravity.y = 1000;
 
@@ -90,11 +96,11 @@ function update() {
     
     game.physics.arcade.collide(player, layer1);
 
-    if (cursors.down.isDown) {
-        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], false);
-    } else if (game.physics.arcade.overlap(player, layer1)) {
-        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true);
-    }
+    if (cursors.down.duration > 100) {
+        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
+    } /*else {
+        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer1);
+    }*/
     player.body.velocity.x = 0;
     if (cursors.left.isDown) {
         player.body.velocity.x = -playerSpeed;
@@ -107,7 +113,7 @@ function update() {
         facing = "right";
     }
 
-    if(player.body.velocity.y > 300) {
+    if(player.body.velocity.y > 200) {
         fall = true;
     }
     
