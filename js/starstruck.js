@@ -10,6 +10,7 @@ function preload() {
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
+    game.load.image('bridge', 'assets/bridge.png');
 
 }
 
@@ -27,6 +28,7 @@ var fall = false;
 var playerSpeed = 100;
 var scale = 1;
 var playerIdle = true;
+var bridge;
 
 
 function create() {
@@ -59,7 +61,7 @@ function create() {
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(1000, 50, 'girlspritesheet');
+    player = game.add.sprite(1250, 50, 'girlspritesheet');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
@@ -89,16 +91,18 @@ function create() {
     text.anchor.setTo(0.5, 0.5);
     game.add.tween(text).to( { alpha: 1 }, 350, Phaser.Easing.Linear.None, true, 100, false);
     game.add.tween(text).to({y: 100}, 350, Phaser.Easing.Out, true,100, false);
+
+    //OBJECTS
+    bridge = game.add.sprite(1100, 200, 'bridge');
+    game.physics.enable(bridge, Phaser.Physics.ARCADE);
+    bridge.body.immovable = true;
     
 }
 
 function update() {
     
     game.physics.arcade.collide(player, layer1);
-    game.physics.arcade.collide(player, layer2);
-    game.physics.arcade.collide(player, layer3);
-
-
+    game.physics.arcade.collide(player, bridge);
 
     if (cursors.down.isDown) {
         
