@@ -3,8 +3,6 @@ var game = new Phaser.Game(1067, 600, Phaser.CANVAS, '', { preload: preload, cre
 
 function preload() {
 
-    game.scale.refresh();
-
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
     game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 62, 62);
@@ -17,10 +15,9 @@ function preload() {
 
 var map;
 var tileset;
-var layer;
 var layer1;
-/*var layer2;
-var layer3*/
+var layer2;
+var layer3;
 var facing = 'left';
 var jumpTimer = 0;
 var cursors;
@@ -52,17 +49,17 @@ function create() {
     layer1.scale.setTo(scale);
     layer1.resizeWorld();
 
-   /* layer2 = map.createLayer('Tile Layer 2');
+    layer2 = map.createLayer('Tile Layer 2');
     layer2.scale.setTo(scale);
     layer2.resizeWorld();
 
     layer3 = map.createLayer('Tile Layer 3');
     layer3.scale.setTo(scale);
-    layer3.resizeWorld();*/
+    layer3.resizeWorld();
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(50, 50, 'girlspritesheet');
+    player = game.add.sprite(1000, 50, 'girlspritesheet');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
@@ -96,14 +93,17 @@ function create() {
 }
 
 function update() {
+    
     game.physics.arcade.collide(player, layer1);
-   /* game.physics.arcade.collide(player, layer2);
-    game.physics.arcade.collide(player, layer3);*/
+    game.physics.arcade.collide(player, layer2);
+    game.physics.arcade.collide(player, layer3);
 
-    game.physics.arcade.collide(player, layer);
 
+
+    if (cursors.down.isDown) {
+        
+    }
     player.body.velocity.x = 0;
-
     if (cursors.left.isDown) {
         player.body.velocity.x = -playerSpeed;
         player.scale.x = -scale;
@@ -163,8 +163,9 @@ function finishLand () {
 
 function render () {
 
-    //game.debug.body(player);
-    //game.debug.bodyInfo(player, 16, 24);
-    //layer.debug = true;
+    game.debug.body(player);
+    game.debug.bodyInfo(player, 16, 24);
+    layer1.debug = true;
+    layer2.debug = true;
 
 }
