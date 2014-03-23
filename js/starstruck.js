@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render }, false, false);
+var game = new Phaser.Game(1067, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render }, false, false);
 
 function preload() {
 
@@ -39,7 +39,7 @@ function create() {
 
     game.stage.backgroundColor = '#000000';
 
-    bg = game.add.tileSprite(0, 0, 800, 600, 'background');
+    bg = game.add.tileSprite(0, 0, 1067, 600, 'background');
     bg.fixedToCamera = true;
 
     map = game.add.tilemap('level1');
@@ -87,11 +87,11 @@ function create() {
 
     //TEXT
 
-    text = game.add.text(player.x+200, 300, 'Ola', { font: "40pt Fixedsys", fill: "white", align: "center"});
+    text = game.add.text(500, 150, 'Use the arrow keys to move around.', { font: "24pt Fixedsys", fill: "white", align: "center"});
     text.alpha = 0;
     text.anchor.setTo(0.5, 0.5);
-    game.add.tween(text).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 100, false);
-    game.add.tween(text).to({y: 250}, 2000, Phaser.Easing.Out, true,100, false);
+    game.add.tween(text).to( { alpha: 1 }, 350, Phaser.Easing.Linear.None, true, 100, false);
+    game.add.tween(text).to({y: 100}, 350, Phaser.Easing.Out, true,100, false);
     
 }
 
@@ -164,7 +164,7 @@ function finishLand () {
 function render () {
 
     //game.debug.body(player);
-    game.debug.bodyInfo(player, 16, 24);
+    //game.debug.bodyInfo(player, 16, 24);
     //layer.debug = true;
 
 }
