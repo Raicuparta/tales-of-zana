@@ -10,7 +10,6 @@ function preload() {
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
-    game.load.image('bridge', 'assets/bridge.png');
 
 }
 
@@ -28,7 +27,6 @@ var fall = false;
 var playerSpeed = 100;
 var scale = 1;
 var playerIdle = true;
-var bridge;
 
 
 function create() {
@@ -50,14 +48,6 @@ function create() {
     layer1 = map.createLayer('Tile Layer 1');
     layer1.scale.setTo(scale);
     layer1.resizeWorld();
-
-    layer2 = map.createLayer('Tile Layer 2');
-    layer2.scale.setTo(scale);
-    layer2.resizeWorld();
-
-    layer3 = map.createLayer('Tile Layer 3');
-    layer3.scale.setTo(scale);
-    layer3.resizeWorld();
 
     game.physics.arcade.gravity.y = 1000;
 
@@ -93,19 +83,17 @@ function create() {
     game.add.tween(text).to({y: 100}, 350, Phaser.Easing.Out, true,100, false);
 
     //OBJECTS
-    bridge = game.add.sprite(1100, 200, 'bridge');
-    game.physics.enable(bridge, Phaser.Physics.ARCADE);
-    bridge.body.immovable = true;
     
 }
 
 function update() {
     
     game.physics.arcade.collide(player, layer1);
-    game.physics.arcade.collide(player, bridge);
 
     if (cursors.down.isDown) {
-        
+        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], false);
+    } else if (game.physics.arcade.overlap(player, layer1)) {
+        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true);
     }
     player.body.velocity.x = 0;
     if (cursors.left.isDown) {
@@ -167,9 +155,8 @@ function finishLand () {
 
 function render () {
 
-    game.debug.body(player);
-    game.debug.bodyInfo(player, 16, 24);
-    layer1.debug = true;
-    layer2.debug = true;
+    //game.debug.body(player);
+    //game.debug.bodyInfo(player, 16, 24);
+    //layer1.debug = true;
 
 }
