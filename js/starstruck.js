@@ -10,6 +10,7 @@ function preload() {
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
+    game.load.image('block', 'assets/block.png');
 
 }
 
@@ -22,11 +23,13 @@ var facing = 'left';
 var cursors;
 var jumpButton;
 var bg;
+var enemy;
 var fall = false;
 var playerSpeed = 100;
 var scale = 1;
 var playerIdle = true;
 var fallTimer = 0;
+var blocked = false;
 
 
 function create() {
@@ -57,8 +60,10 @@ function create() {
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(1250, 50, 'girlspritesheet');
-    game.physics.enable(player, Phaser.Physics.ARCADE);
+    player = game.add.sprite(2000, 600, 'girlspritesheet');
+    enemy = game.add.sprite(2200, 650, 'block');
+    
+    game.physics.enable([player, enemy], Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
     player.body.collideWorldBounds = true;
@@ -70,12 +75,14 @@ function create() {
     player.animations.add('girlfront', [1], 10, false);
     player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
     player.animations.add('girlland', [21, 22, 23, 24, 25, 26, 27], 15, false);
-    player.animations.add('girlidle', [0], 20, true);
+    player.animations.add('girlidle', [0], 20, false);
     player.animations.add('girljump', [28, 29, 30], 10, false);
-    player.animations.add('girlbump', [31], 15, true);
+    player.animations.add('girlbump', [31], 15, false);
 
     player.animations.getAnimation('girlland').onComplete.add(finishLand);
 
+    
+    //enemy.physics.arcade.gravity.y = 1000;
     game.camera.follow(player);
 
     cursors = game.input.keyboard.createCursorKeys();
@@ -96,12 +103,15 @@ function create() {
 function update() {
     
     game.physics.arcade.collide(player, layer1);
+    game.physics.arcade.collide(enemy, layer1);
 
-    if (cursors.down.duration > 100) {
+    if (cursors.down.isDown){
         map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
-    } /*else {
+    } 
+    else {
         map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer1);
-    }*/
+    }
+
     player.body.velocity.x = 0;
     if (cursors.left.isDown) {
         player.body.velocity.x = -playerSpeed;
@@ -153,9 +163,19 @@ function update() {
         }
     }
 
-        if (player.body.blocked.left || player.body.blocked.right) {
-        player.animations.play('girlbump');
+    if (player.body.blocked.left || player.body.blocked.right) {
+        blocked = true;
     }
+
+    if (blocked) {
+        player.animations.play('girlbump');
+
+        if ((facing == 'right' && cursors.right.isDown) || (facing == 'left' && cursors.left.isDown) || cursors.up.isDown ){
+            blocked = false;
+        }
+    }
+
+    enemy.body.velocity.x = -25;
 
 }
 
