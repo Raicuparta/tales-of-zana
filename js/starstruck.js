@@ -13,6 +13,10 @@ function preload() {
     game.load.image('block', 'assets/block.png');
     game.load.image('blackground', 'assets/blackground.png');
 
+ //AUDIO
+    game.load.audio('playerWalkGrass', 'assets/SoundEffects/player_walk_grass.ogg');
+    game.load.audio('playerBump', 'assets/SoundEffects/player_bump.ogg');
+
 }
 
 var map;
@@ -32,6 +36,8 @@ var playerIdle = true;
 var fallTimer = 0;
 var blocked = false;
 var gamePaused = false;
+var walkSoundEffect;
+var bumpSoundEffect;
 
 
 function create() {
@@ -99,6 +105,12 @@ function create() {
     game.add.tween(text).to({y: 100}, 350, Phaser.Easing.Out, true,100, false);
 
     //OBJECTS
+
+
+    //AUDIO
+    bumpSoundEffect = game.add.audio('playerBump',1,true);
+    walkSoundEffect = game.add.audio('playerWalkGrass',1,true);
+    walkSoundEffect.play('',0,1,true);
     
 }
 
@@ -109,6 +121,12 @@ function update() {
     game.physics.arcade.collide(player, enemy, oneLessLife, null, this);
     
 if(gamePaused == false){
+
+   if(player.body.velocity.x == 0 || player.body.blocked.left || player.body.blocked.right || !player.body.blocked.down) {
+        walkSoundEffect.pause();
+    } else {
+        walkSoundEffect.resume();
+    }
 
     if (cursors.down.isDown){
         map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
@@ -169,6 +187,9 @@ if(gamePaused == false){
     }
 
     if (player.body.blocked.left || player.body.blocked.right) {
+        /*if (!player.animations.getAnimation('girlbump').isPlaying) {
+            bumpSoundEffect.play('',0,1,false);
+        }*/
         blocked = true;
     }
 
