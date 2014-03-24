@@ -11,6 +11,7 @@ function preload() {
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
     game.load.image('block', 'assets/block.png');
+    game.load.image('blackground', 'assets/blackground.png');
 
 }
 
@@ -30,6 +31,7 @@ var scale = 1;
 var playerIdle = true;
 var fallTimer = 0;
 var blocked = false;
+var gamePaused = false;
 
 
 function create() {
@@ -101,9 +103,12 @@ function create() {
 }
 
 function update() {
-    
+
     game.physics.arcade.collide(player, layer1);
     game.physics.arcade.collide(enemy, layer1);
+    game.physics.arcade.collide(player, enemy, oneLessLife, null, this);
+    
+if(gamePaused == false){
 
     if (cursors.down.isDown){
         map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
@@ -176,12 +181,26 @@ function update() {
     }
 
     enemy.body.velocity.x = -25;
-
+}
 }
 
 
 function finishLand () {
     fall = false;
+}
+
+function oneLessLife(girl, enemy){
+    gamePaused = true;
+    black = game.add.tileSprite(0, 0, 1067, 600, 'blackground');
+    game.time.events.add(Phaser.Timer.SECOND * 4, fadeBlackground, this);
+    black.fixedToCamera = true;
+    player.body.x = 1000;
+    player.body.y = 50;
+}
+
+function fadeBlackground(){
+    game.add.tween(black).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true);
+    gamePaused = false;
 }
 
 function render () {
