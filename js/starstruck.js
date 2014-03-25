@@ -93,7 +93,6 @@ function create() {
     player.animations.add('girlbump', [31], 15, false);
 
     enemy.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, true);
-    enemy.animations.play('move');
 
     player.animations.getAnimation('girlland').onComplete.add(finishLand);
 
@@ -211,11 +210,19 @@ function update() {
             }
         }
 
-        
-
-
-        if(enemy.body.x == 1025){
+        if (goEnemy){
+            enemy.body.velocity.x = -80;
+            enemy.animations.play('move');
+            
+        } else {
             enemy.body.velocity.x = 0;
+            enemy.animations.stop();
+        }
+
+        if(enemy.body.x <= 1008){
+            if (enemy.animations.getAnimation('move').frame == 0){
+                goEnemy = false;
+            }
         }
 
         if (player.body.touching.right){
@@ -225,12 +232,6 @@ function update() {
         if (player.body.x >= 1600){
             goEnemy = true;
         }
-
-        if (goEnemy){
-            enemy.body.velocity.x = -80;
-            
-        }
-        console.log(enemy.animations.getAnimation('move').frame);
         
         if (enemy.animations.getAnimation('move').frame == 0 && !stoneSoundEffect.isPlaying && goEnemy) {
             stoneSoundEffect.play('',0,1,false);
@@ -262,7 +263,7 @@ function fadeBlackground(){
 function render () {
     //game.debug.body(player);
     //game.debug.body(enemy);
-    //game.debug.bodyInfo(player, 16, 24);
+    game.debug.bodyInfo(player, 16, 24);
     //layer1.debug = true;
 
 }
