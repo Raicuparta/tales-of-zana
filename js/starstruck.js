@@ -30,7 +30,7 @@ var jumpButton;
 var bg;
 var enemy;
 var fall = false;
-var playerSpeed = 100;
+var playerSpeed = 250;
 var scale = 1;
 var playerIdle = true;
 var fallTimer = 0;
@@ -38,6 +38,7 @@ var blocked = false;
 var gamePaused = false;
 var walkSoundEffect;
 var bumpSoundEffect;
+var goEnemy = false;
 
 
 function create() {
@@ -68,7 +69,7 @@ function create() {
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(2000, 600, 'girlspritesheet');
+    player = game.add.sprite(1000, 600, 'girlspritesheet');
     enemy = game.add.sprite(2200, 650, 'block');
     
     game.physics.enable([player, enemy], Phaser.Physics.ARCADE);
@@ -118,7 +119,7 @@ function update() {
 
     game.physics.arcade.collide(player, layer1);
     game.physics.arcade.collide(enemy, layer1);
-    game.physics.arcade.collide(player, enemy, oneLessLife, null, this);
+    game.physics.arcade.collide(player, enemy);
     
 if(gamePaused == false){
 
@@ -201,7 +202,26 @@ if(gamePaused == false){
         }
     }
 
-    enemy.body.velocity.x = -25;
+    
+    enemy.body.immovable = true;
+
+    if(enemy.body.x == 1025){
+        enemy.body.velocity.x = 0;
+    }
+
+    if (player.body.touching.right){
+        player.body.blocked;
+    }
+
+    if (player.body.x >= 1600){
+        goEnemy = true;
+    }
+
+    if (goEnemy){
+        enemy.body.velocity.x = -100;
+    }
+
+        
 }
 }
 
