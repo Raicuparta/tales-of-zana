@@ -6,11 +6,11 @@ function preload() {
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
     game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 62, 62);
+    game.load.spritesheet('enemy', 'assets/enemy.png', 52, 50);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
     game.load.image('background', 'assets/background2.png');
-    game.load.image('block', 'assets/block.png');
     game.load.image('blackground', 'assets/blackground.png');
 
  //AUDIO
@@ -70,8 +70,8 @@ function create() {
     game.physics.arcade.gravity.y = 1000;
 
     player = game.add.sprite(1000, 600, 'girlspritesheet');
-    enemy = game.add.sprite(2200, 650, 'block');
-    
+    enemy = game.add.sprite(2200, 650, 'enemy');
+
     game.physics.enable([player, enemy], Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
@@ -79,6 +79,8 @@ function create() {
     player.scale.setTo(scale);
     player.body.setSize(14, 50, 0, 6);
 
+    enemy.body.immovable = true;
+    enemy.body.allowRotation = true;
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
@@ -87,6 +89,9 @@ function create() {
     player.animations.add('girlidle', [0], 20, false);
     player.animations.add('girljump', [28, 29, 30], 10, false);
     player.animations.add('girlbump', [31], 15, false);
+
+    enemy.animations.add('move', [1, 2, 3, 4, 5, 6, 7, 8, 9], 15, true);
+    enemy.animations.play('move');
 
     player.animations.getAnimation('girlland').onComplete.add(finishLand);
 
@@ -203,7 +208,7 @@ if(gamePaused == false){
     }
 
     
-    enemy.body.immovable = true;
+
 
     if(enemy.body.x == 1025){
         enemy.body.velocity.x = 0;
@@ -217,10 +222,10 @@ if(gamePaused == false){
         goEnemy = true;
     }
 
-    if (goEnemy){
+    if (goEnemy && enemy.animations.getAnimation('move').frame != 1){
         enemy.body.velocity.x = -100;
     }
-
+    console.log(enemy.animations.getAnimation('move').frame);
         
 }
 }
