@@ -16,6 +16,7 @@ function preload() {
  //AUDIO
     game.load.audio('playerWalkGrass', 'assets/SoundEffects/player_walk_grass.ogg');
     game.load.audio('playerBump', 'assets/SoundEffects/player_bump.ogg');
+    game.load.audio('stone', 'assets/SoundEffects/stone.ogg');
 
 }
 
@@ -39,6 +40,7 @@ var gamePaused = false;
 var walkSoundEffect;
 var bumpSoundEffect;
 var goEnemy = false;
+var stoneSoundEffect;
 
 
 function create() {
@@ -70,7 +72,7 @@ function create() {
     game.physics.arcade.gravity.y = 1000;
 
     player = game.add.sprite(1000, 600, 'girlspritesheet');
-    enemy = game.add.sprite(2200, 650, 'enemy');
+    enemy = game.add.sprite(2170, 640, 'enemy');
 
     game.physics.enable([player, enemy], Phaser.Physics.ARCADE);
 
@@ -80,7 +82,7 @@ function create() {
     player.body.setSize(14, 50, 0, 6);
 
     enemy.body.immovable = true;
-    enemy.body.allowRotation = true;
+    enemy.body.setSize(30, 45, 0, 6);
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
@@ -117,6 +119,8 @@ function create() {
     bumpSoundEffect = game.add.audio('playerBump',1,true);
     walkSoundEffect = game.add.audio('playerWalkGrass',1,true);
     walkSoundEffect.play('',0,1,true);
+    stoneSoundEffect = game.add.audio('stone',1,false);
+
     
 }
 
@@ -227,6 +231,10 @@ function update() {
             
         }
         console.log(enemy.animations.getAnimation('move').frame);
+        
+        if (enemy.animations.getAnimation('move').frame == 0 && !stoneSoundEffect.isPlaying && goEnemy) {
+            stoneSoundEffect.play('',0,1,false);
+        }
             
     }
 
