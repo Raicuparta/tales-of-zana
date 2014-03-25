@@ -82,7 +82,7 @@ function create() {
     player.body.setSize(14, 50, 0, 6);
 
     enemy.body.immovable = true;
-    enemy.body.setSize(30, 45, 0, 6);
+    enemy.body.setSize(25, 45, 5, 6);
 
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
@@ -260,9 +260,9 @@ function fadeBlackground(){
 }
 
 function render () {
-
     //game.debug.body(player);
-    game.debug.bodyInfo(player, 16, 24);
+    //game.debug.body(enemy);
+    //game.debug.bodyInfo(player, 16, 24);
     //layer1.debug = true;
 
 }
