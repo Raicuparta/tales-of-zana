@@ -90,7 +90,7 @@ function create() {
     player.animations.add('girljump', [28, 29, 30], 10, false);
     player.animations.add('girlbump', [31], 15, false);
 
-    enemy.animations.add('move', [1, 2, 3, 4, 5, 6, 7, 8, 9], 15, true);
+    enemy.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, true);
     enemy.animations.play('move');
 
     player.animations.getAnimation('girlland').onComplete.add(finishLand);
@@ -126,108 +126,110 @@ function update() {
     game.physics.arcade.collide(enemy, layer1);
     game.physics.arcade.collide(player, enemy);
     
-if(gamePaused == false){
+    if(gamePaused == false){
 
-   if(player.body.velocity.x == 0 || player.body.blocked.left || player.body.blocked.right || !player.body.blocked.down) {
-        walkSoundEffect.pause();
-    } else {
-        walkSoundEffect.resume();
-    }
-
-    if (cursors.down.isDown){
-        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
-    } 
-    else {
-        map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer1);
-    }
-
-    player.body.velocity.x = 0;
-    if (cursors.left.isDown) {
-        player.body.velocity.x = -playerSpeed;
-        player.scale.x = -scale;
-        facing = "left";
-    }
-    else if (cursors.right.isDown) {
-        player.body.velocity.x = playerSpeed;
-        player.scale.x = scale;
-        facing = "right";
-    }
-
-    if(player.body.velocity.y > 200) {
-        fall = true;
-    }
-    
-
-    //ANIMACOES
-    if (player.body.onFloor()) {
-        if (cursors.up.isDown)
-        {
-            player.body.velocity.y = -400;
-            player.animations.play('girljump');
-            //jumpTimer = game.time.now + 500;
+       if(player.body.velocity.x == 0 || player.body.blocked.left || player.body.blocked.right || !player.body.blocked.down) {
+            walkSoundEffect.pause();
+        } else {
+            walkSoundEffect.resume();
         }
 
-        else if (player.body.velocity.x != 0) {
-            if (fall) {
+        if (cursors.down.isDown){
+            map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
+        } 
+        else {
+            map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer1);
+        }
+
+        player.body.velocity.x = 0;
+        if (cursors.left.isDown) {
+            player.body.velocity.x = -playerSpeed;
+            player.scale.x = -scale;
+            facing = "left";
+        }
+        else if (cursors.right.isDown) {
+            player.body.velocity.x = playerSpeed;
+            player.scale.x = scale;
+            facing = "right";
+        }
+
+        if(player.body.velocity.y > 200) {
+            fall = true;
+        }
+        
+
+        //ANIMACOES
+        if (player.body.onFloor()) {
+            if (cursors.up.isDown)
+            {
+                player.body.velocity.y = -400;
+                player.animations.play('girljump');
+                //jumpTimer = game.time.now + 500;
+            }
+
+            else if (player.body.velocity.x != 0) {
+                if (fall) {
+                    player.animations.play('girlland');
+                }
+                else
+                {
+                    player.animations.play('walk');
+                }
+            }
+            else if (player.body.velocity.x == 0 && fall) {
                 player.animations.play('girlland');
             }
-            else
-            {
-                player.animations.play('walk');
+
+            else {
+                player.animations.play('girlidle');
+            }
+
+        }
+        else
+        {
+            if (player.body.velocity.y > 0) {
+                player.animations.play('girlfalling');
             }
         }
-        else if (player.body.velocity.x == 0 && fall) {
-            player.animations.play('girlland');
+
+        if (player.body.blocked.left || player.body.blocked.right) {
+            /*if (!player.animations.getAnimation('girlbump').isPlaying) {
+                bumpSoundEffect.play('',0,1,false);
+            }*/
+            blocked = true;
         }
 
-        else {
-            player.animations.play('girlidle');
+        if (blocked) {
+            player.animations.play('girlbump');
+
+            if ((facing == 'right' && cursors.right.isDown) || (facing == 'left' && cursors.left.isDown) || cursors.up.isDown ){
+                blocked = false;
+            }
         }
 
-    }
-    else
-    {
-        if (player.body.velocity.y > 0) {
-            player.animations.play('girlfalling');
-        }
-    }
-
-    if (player.body.blocked.left || player.body.blocked.right) {
-        /*if (!player.animations.getAnimation('girlbump').isPlaying) {
-            bumpSoundEffect.play('',0,1,false);
-        }*/
-        blocked = true;
-    }
-
-    if (blocked) {
-        player.animations.play('girlbump');
-
-        if ((facing == 'right' && cursors.right.isDown) || (facing == 'left' && cursors.left.isDown) || cursors.up.isDown ){
-            blocked = false;
-        }
-    }
-
-    
-
-
-    if(enemy.body.x == 1025){
-        enemy.body.velocity.x = 0;
-    }
-
-    if (player.body.touching.right){
-        player.body.blocked;
-    }
-
-    if (player.body.x >= 1600){
-        goEnemy = true;
-    }
-
-    if (goEnemy && enemy.animations.getAnimation('move').frame != 1){
-        enemy.body.velocity.x = -100;
-    }
-    console.log(enemy.animations.getAnimation('move').frame);
         
-}
+
+
+        if(enemy.body.x == 1025){
+            enemy.body.velocity.x = 0;
+        }
+
+        if (player.body.touching.right){
+            player.body.blocked;
+        }
+
+        if (player.body.x >= 1600){
+            goEnemy = true;
+        }
+
+        if (goEnemy){
+            enemy.body.velocity.x = -80;
+            
+        }
+        console.log(enemy.animations.getAnimation('move').frame);
+            
+    }
+
 }
 
 
