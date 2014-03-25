@@ -91,6 +91,7 @@ function create() {
     player.animations.add('girlidle', [0], 20, false);
     player.animations.add('girljump', [28, 29, 30], 10, false);
     player.animations.add('girlbump', [31], 15, false);
+    player.animations.add('girlsmash', [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42], 15, false);
 
     enemy.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, true);
 
@@ -220,6 +221,8 @@ function update() {
         }
 
         if(enemy.body.x <= 1008){
+            player.body.immovable = true;
+            player.animations.play('girlsmash');
             if (enemy.animations.getAnimation('move').frame == 0){
                 goEnemy = false;
             }
