@@ -6,6 +6,7 @@ function preload() {
     game.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles-1', 'assets/tiles-1.png');
     game.load.spritesheet('girlspritesheet', 'assets/spritesheet.png', 62, 62);
+    game.load.spritesheet('smashDeath', 'assets/smashDeath.png', 62, 62);
     game.load.spritesheet('enemy', 'assets/enemy.png', 52, 50);
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('starSmall', 'assets/star.png');
@@ -14,9 +15,13 @@ function preload() {
     game.load.image('blackground', 'assets/blackground.png');
 
  //AUDIO
-    game.load.audio('playerWalkGrass', 'assets/SoundEffects/player_walk_grass.ogg');
+    game.load.audio('playerWalkGrass1', 'assets/SoundEffects/player_walk_grass1.ogg');
+    game.load.audio('playerWalkGrass2', 'assets/SoundEffects/player_walk_grass2.ogg');
+    game.load.audio('playerWalkGrass3', 'assets/SoundEffects/player_walk_grass3.ogg');
+    game.load.audio('playerWalkGrass4', 'assets/SoundEffects/player_walk_grass4.ogg');
     game.load.audio('playerBump', 'assets/SoundEffects/player_bump.ogg');
     game.load.audio('stone', 'assets/SoundEffects/stone.ogg');
+    game.load.audio('smashDeath', 'assets/SoundEffects/player_smashDeath.ogg');
 
 }
 
@@ -41,6 +46,8 @@ var walkSoundEffect;
 var bumpSoundEffect;
 var goEnemy = false;
 var stoneSoundEffect;
+var smashDeath;
+var smashDeathSoundEffect;
 
 
 function create() {
@@ -73,6 +80,7 @@ function create() {
 
     player = game.add.sprite(1000, 600, 'girlspritesheet');
     enemy = game.add.sprite(2170, 640, 'enemy');
+    smashDeath = game.add.sprite(1046, 754, 'smashDeath');
 
     game.physics.enable([player, enemy], Phaser.Physics.ARCADE);
 
@@ -84,6 +92,8 @@ function create() {
     enemy.body.immovable = true;
     enemy.body.setSize(25, 45, 5, 6);
 
+    smashDeath.visible = false;
+
     player.animations.add('walk', [2, 3, 4, 5, 6, 7, 8, 9], 15, false);
     player.animations.add('girlfront', [1], 10, false);
     player.animations.add('girlfalling', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 15, true);
@@ -91,11 +101,15 @@ function create() {
     player.animations.add('girlidle', [0], 20, false);
     player.animations.add('girljump', [28, 29, 30], 10, false);
     player.animations.add('girlbump', [31], 15, false);
-    player.animations.add('girlsmash', [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42], 15, false);
+
+    player.animations.getAnimation('girlland').onComplete.add(finishLand);
 
     enemy.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7, 8], 15, true);
 
-    player.animations.getAnimation('girlland').onComplete.add(finishLand);
+    smashDeath.animations.add('smashDeath', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 15, false);
+
+    smashDeath.scale.setTo(-1, 1);
+
 
     
     //enemy.physics.arcade.gravity.y = 1000;
@@ -116,10 +130,16 @@ function create() {
 
 
     //AUDIO
+    walkSoundEffect = [
+        game.add.audio('playerWalkGrass1',1,false),
+        game.add.audio('playerWalkGrass2',1,false),
+        game.add.audio('playerWalkGrass3',1,false),
+        game.add.audio('playerWalkGrass4',1,false)
+    ];
+
     bumpSoundEffect = game.add.audio('playerBump',1,true);
-    walkSoundEffect = game.add.audio('playerWalkGrass',1,true);
-    walkSoundEffect.play('',0,1,true);
     stoneSoundEffect = game.add.audio('stone',1,false);
+    smashDeathSoundEffect = game.add.audio('smashDeath',1,false);
 
     
 }
@@ -132,10 +152,12 @@ function update() {
     
     if(gamePaused == false){
 
-       if(player.body.velocity.x == 0 || player.body.blocked.left || player.body.blocked.right || !player.body.blocked.down) {
-            walkSoundEffect.pause();
-        } else {
-            walkSoundEffect.resume();
+       if(player.animations.getAnimation('walk').frame == 3 || player.animations.getAnimation('walk').frame == 7) {
+            var isPlayingSound = false;
+            for (var i = 0; i < 4; i++) {
+                isPlayingSound = isPlayingSound || walkSoundEffect[i].isPlaying;
+            }
+            if (!isPlayingSound) walkSoundEffect[Math.round(Math.random()*3)].play('',0,1,false);
         }
 
         if (cursors.down.isDown){
@@ -220,9 +242,24 @@ function update() {
             enemy.animations.stop();
         }
 
+        if(enemy.body.x <= 1020){
+            player.exists = false;
+            smashDeath.visible = true;
+            if (!smashDeath.animations.getAnimation('smashDeath').isFinished)
+            {
+                if (!smashDeath.animations.getAnimation('smashDeath').isPlaying)
+                {
+                    smashDeath.play('smashDeath');
+                }
+
+                if (smashDeath.animations.getAnimation('smashDeath').frame == 4 && !smashDeathSoundEffect.isPlaying)
+                {
+                    smashDeathSoundEffect.play('',0,1,false);
+                }
+            
+           }
+        }
         if(enemy.body.x <= 1008){
-            player.body.immovable = true;
-            player.animations.play('girlsmash');
             if (enemy.animations.getAnimation('move').frame == 0){
                 goEnemy = false;
             }
