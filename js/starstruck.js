@@ -66,7 +66,7 @@ function create() {
 
     layer = [map.createLayer('Background'), map.createLayer('Solid'), map.createLayer('Grass1'), map.createLayer('Grass2')];
     map.setLayer(layer[1]);
-    layer[0].resizeWorld();
+    layer[1].resizeWorld();
 
     map.setCollisionByExclusion([], true, layer[1]);
 
@@ -144,8 +144,8 @@ function update() {
     game.physics.arcade.collide(player, layer[1]);
     game.physics.arcade.collide(enemy, layer[1]);
     game.physics.arcade.collide(player, enemy);
-    game.physics.arcade.collide(emitter, layer1, bloodOnFloor, null, this);
-    game.physics.arcade.collide(emitter1, layer1, bloodOnFloor, null, this);
+    game.physics.arcade.collide(emitter, layer[1], bloodOnFloor, null, this);
+    game.physics.arcade.collide(emitter1, layer[1], bloodOnFloor, null, this);
     
     if(gamePaused == false){
 
@@ -237,7 +237,7 @@ function update() {
         }
 
         if (goEnemy){
-            enemy.body.velocity.x = -80;
+            enemy.body.velocity.x = -800;
             enemy.animations.play('move');
             
         } else {
@@ -258,6 +258,23 @@ function update() {
                 if (smashDeath.animations.getAnimation('smashDeath').frame == 4 && !smashDeathSoundEffect.isPlaying)
                 {
                     smashDeathSoundEffect.play('',0,1,false);
+                    emitter = game.add.emitter(player.body.x+10, player.body.y+25);
+                    emitter.makeParticles('blood');
+                    emitter.minRotation = 0;
+                    emitter.maxRotation = 0;
+                    emitter.minParticleSpeed.setTo(-20, -50);
+                    emitter.maxParticleSpeed.setTo(50, 50);
+                    emitter.gravity = -900;
+                    emitter.start(true, 15000, null, 50);
+
+                    emitter1 = game.add.emitter(player.body.x+10, player.body.y+35);
+                    emitter1.makeParticles('brain');
+                    emitter1.minRotation = 0;
+                    emitter1.maxRotation = 0;
+                    emitter1.minParticleSpeed.setTo(-50, -50);
+                    emitter1.maxParticleSpeed.setTo(50, 50);
+                    emitter1.gravity = -900;
+                    emitter1.start(true, 15000, null, 10);
                 }
             
            }
@@ -278,23 +295,6 @@ function update() {
         
         if (enemy.animations.getAnimation('move').frame == 0 && !stoneSoundEffect.isPlaying && goEnemy) {
             stoneSoundEffect.play('',0,1,false);
-            emitter = game.add.emitter(player.body.x+10, player.body.y+25);
-            emitter.makeParticles('blood');
-            emitter.minRotation = 0;
-            emitter.maxRotation = 0;
-            emitter.minParticleSpeed.setTo(-20, -50);
-            emitter.maxParticleSpeed.setTo(50, 50);
-            emitter.gravity = -900;
-            emitter.start(true, 15000, null, 50);
-
-            emitter1 = game.add.emitter(player.body.x+10, player.body.y+35);
-            emitter1.makeParticles('brain');
-            emitter1.minRotation = 0;
-            emitter1.maxRotation = 0;
-            emitter1.minParticleSpeed.setTo(-50, -50);
-            emitter1.maxParticleSpeed.setTo(50, 50);
-            emitter1.gravity = -900;
-            emitter1.start(true, 15000, null, 10);
         }
             
     }
@@ -318,6 +318,10 @@ function oneLessLife(girl, enemy){
 function fadeBlackground(){
     game.add.tween(black).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true);
     gamePaused = false;
+}
+
+function bloodOnFloor(emitter,b){
+    emitter.body.velocity = 0;
 }
 
 function render () {
