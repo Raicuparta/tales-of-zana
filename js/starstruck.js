@@ -15,10 +15,10 @@ function preload() {
     game.load.image('blackground', 'assets/blackground.png');
 
  //AUDIO
-    game.load.audio('playerWalkGrass1', 'assets/SoundEffects/player_walk_grass1.ogg');
-    game.load.audio('playerWalkGrass2', 'assets/SoundEffects/player_walk_grass2.ogg');
-    game.load.audio('playerWalkGrass3', 'assets/SoundEffects/player_walk_grass3.ogg');
-    game.load.audio('playerWalkGrass4', 'assets/SoundEffects/player_walk_grass4.ogg');
+    game.load.audio('playerWalkGrass1', 'assets/SoundEffects/player_walk_grass1.wav');
+    game.load.audio('playerWalkGrass2', 'assets/SoundEffects/player_walk_grass2.wav');
+    game.load.audio('playerWalkGrass3', 'assets/SoundEffects/player_walk_grass3.wav');
+    game.load.audio('playerWalkGrass4', 'assets/SoundEffects/player_walk_grass4.wav');
     game.load.audio('playerBump', 'assets/SoundEffects/player_bump.ogg');
     game.load.audio('stone', 'assets/SoundEffects/stone.ogg');
     game.load.audio('smashDeath', 'assets/SoundEffects/player_smashDeath.ogg');
@@ -152,7 +152,6 @@ function update() {
     
     if(gamePaused == false){
 
-        // la de vez em quando da bue mais passos do que e suposto
        if(player.animations.getAnimation('walk').isPlaying && (player.animations.getAnimation('walk').frame == 3 || player.animations.getAnimation('walk').frame == 7) ) {
             var isPlayingSound = false;
             for (var i = 0; i < 4; i++) {
@@ -220,6 +219,7 @@ function update() {
         else
         {
             if (player.body.velocity.y > 0) {
+                player.animations.stop();
                 player.animations.play('girlfalling');
             }
         }
