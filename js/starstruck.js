@@ -78,7 +78,7 @@ function create() {
 
     game.physics.arcade.gravity.y = 1000;
 
-    player = game.add.sprite(1000, 600, 'girlspritesheet');
+    player = game.add.sprite(1000, 100, 'girlspritesheet');
     enemy = game.add.sprite(2170, 640, 'enemy');
     smashDeath = game.add.sprite(1046, 754, 'smashDeath');
 
@@ -152,12 +152,16 @@ function update() {
     
     if(gamePaused == false){
 
-       if(player.animations.getAnimation('walk').frame == 3 || player.animations.getAnimation('walk').frame == 7) {
+        // la de vez em quando da bue mais passos do que e suposto
+       if(player.animations.getAnimation('walk').isPlaying && (player.animations.getAnimation('walk').frame == 3 || player.animations.getAnimation('walk').frame == 7) ) {
             var isPlayingSound = false;
             for (var i = 0; i < 4; i++) {
                 isPlayingSound = isPlayingSound || walkSoundEffect[i].isPlaying;
             }
-            if (!isPlayingSound) walkSoundEffect[Math.round(Math.random()*3)].play('',0,1,false);
+            if (!isPlayingSound)
+            {
+                walkSoundEffect[Math.round(Math.random()*3)].play('',0,1,false);
+            }
         }
 
         if (cursors.down.isDown){
@@ -189,6 +193,7 @@ function update() {
             if (cursors.up.isDown)
             {
                 player.body.velocity.y = -400;
+                player.animations.stop();
                 player.animations.play('girljump');
                 //jumpTimer = game.time.now + 500;
             }
@@ -207,6 +212,7 @@ function update() {
             }
 
             else {
+                player.animations.stop();
                 player.animations.play('girlidle');
             }
 
@@ -269,7 +275,7 @@ function update() {
             player.body.blocked;
         }
 
-        if (player.body.x >= 1600){
+        if (player.body.x >= 1600 && player.body.y > 400){
             goEnemy = true;
         }
         
