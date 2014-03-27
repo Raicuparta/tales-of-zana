@@ -27,9 +27,6 @@ function preload() {
 
 var map;
 var tileset;
-var layer1;
-var layer2;
-var layer3;
 var facing = 'left';
 var cursors;
 var jumpButton;
@@ -63,18 +60,12 @@ function create() {
     map = game.add.tilemap('level1');
 
     map.addTilesetImage('tiles-1');
-    map.setLayer(layer1);
 
+    layer = [map.createLayer('Background'), map.createLayer('Solid'), map.createLayer('Grass1'), map.createLayer('Grass2')];
+    map.setLayer(layer[1]);
+    layer[0].resizeWorld();
 
-    layer2 = map.createLayer('Tile Layer 2');
-    layer2.scale.setTo(scale);
-    layer2.resizeWorld();
-
-    layer1 = map.createLayer('Tile Layer 1');
-    layer1.scale.setTo(scale);
-    layer1.resizeWorld();
-
-    map.setCollisionByExclusion([], true, layer1);
+    map.setCollisionByExclusion([], true, layer[1]);
 
     game.physics.arcade.gravity.y = 1000;
 
@@ -82,7 +73,8 @@ function create() {
     enemy = game.add.sprite(2170, 640, 'enemy');
     smashDeath = game.add.sprite(1046, 754, 'smashDeath');
 
-    game.physics.enable([player, enemy], Phaser.Physics.ARCADE);
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+    game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
     player.anchor.setTo(.5,.5);
     player.body.collideWorldBounds = true;
@@ -146,8 +138,8 @@ function create() {
 
 function update() {
 
-    game.physics.arcade.collide(player, layer1);
-    game.physics.arcade.collide(enemy, layer1);
+    game.physics.arcade.collide(player, layer[1]);
+    game.physics.arcade.collide(enemy, layer[1]);
     game.physics.arcade.collide(player, enemy);
     
     if(gamePaused == false){
@@ -164,10 +156,10 @@ function update() {
         }
 
         if (cursors.down.isDown){
-            map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer1);
+            map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer[1]);
         } 
         else {
-            map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer1);
+            map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer[1]);
         }
 
         player.body.velocity.x = 0;
