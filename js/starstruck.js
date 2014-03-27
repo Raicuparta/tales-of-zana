@@ -11,6 +11,8 @@ function preload() {
     game.load.spritesheet('droid', 'assets/droid.png', 32, 32);
     game.load.image('starSmall', 'assets/star.png');
     game.load.image('starBig', 'assets/star2.png');
+    game.load.image('blood', 'assets/blockR.png');
+    game.load.image('brain', 'assets/blockG.png');
     game.load.image('background', 'assets/background2.png');
     game.load.image('blackground', 'assets/blackground.png');
 
@@ -45,7 +47,8 @@ var goEnemy = false;
 var stoneSoundEffect;
 var smashDeath;
 var smashDeathSoundEffect;
-
+var emitter;
+var emitter1;
 
 function create() {
     game.stage.smoothed = false;
@@ -141,6 +144,8 @@ function update() {
     game.physics.arcade.collide(player, layer[1]);
     game.physics.arcade.collide(enemy, layer[1]);
     game.physics.arcade.collide(player, enemy);
+    game.physics.arcade.collide(emitter, layer1, bloodOnFloor, null, this);
+    game.physics.arcade.collide(emitter1, layer1, bloodOnFloor, null, this);
     
     if(gamePaused == false){
 
@@ -273,6 +278,23 @@ function update() {
         
         if (enemy.animations.getAnimation('move').frame == 0 && !stoneSoundEffect.isPlaying && goEnemy) {
             stoneSoundEffect.play('',0,1,false);
+            emitter = game.add.emitter(player.body.x+10, player.body.y+25);
+            emitter.makeParticles('blood');
+            emitter.minRotation = 0;
+            emitter.maxRotation = 0;
+            emitter.minParticleSpeed.setTo(-20, -50);
+            emitter.maxParticleSpeed.setTo(50, 50);
+            emitter.gravity = -900;
+            emitter.start(true, 15000, null, 50);
+
+            emitter1 = game.add.emitter(player.body.x+10, player.body.y+35);
+            emitter1.makeParticles('brain');
+            emitter1.minRotation = 0;
+            emitter1.maxRotation = 0;
+            emitter1.minParticleSpeed.setTo(-50, -50);
+            emitter1.maxParticleSpeed.setTo(50, 50);
+            emitter1.gravity = -900;
+            emitter1.start(true, 15000, null, 10);
         }
             
     }
