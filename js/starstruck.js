@@ -237,7 +237,7 @@ function update() {
         }
 
         if (goEnemy){
-            enemy.body.velocity.x = -800;
+            enemy.body.velocity.x = -80;
             enemy.animations.play('move');
             
         } else {
