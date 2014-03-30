@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="5" height="5" tilewidth="48" tileheight="48">
+ <tileset firstgid="1" name="tiles-1" tilewidth="48" tileheight="48">
+  <image source="tiles-1.png" width="528" height="288"/>
+ </tileset>
+ <layer name="regions_input" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxTYcAEKljEKAEAGbQASQ==
+  </data>
+ </layer>
+ <layer name="input_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEvFjEKAEABHQADg==
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJzjZaA9AAAFeAAO
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjZKA9AAAAyAAC
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYqA9AAABLAAD
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjZqA9AAABkAAE
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJyTYKA9AAAJxAAZ
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJyTZKA9AAAKKAAa
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJwTZ6A9AAAJYAAY
+  </data>
+ </layer>
+ <layer name="regions_output" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEKljEKAEAC6QAJQ==
+  </data>
+ </layer>
+ <layer name="output3_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAETFjEKAEAAQQAAw==
+  </data>
+ </layer>
+ <layer name="output2_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEjFjEKAEAALQAAg==
+  </data>
+ </layer>
+ <layer name="output1_Solid" width="5" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEzFjEKAEAAVQABA==
+  </data>
+ </layer>
+</map>
