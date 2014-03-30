@@ -141,6 +141,7 @@ define(['module/Level'],function(Level) {
                 if (!isPlayingSound)
                 {
                     _soundStepGrass[Math.round(Math.random()*3)].play('',0,1,false);
+                    Level.moveGrass(_spriteMain.body.x, _spriteMain.body.y);
                 }
             }
 

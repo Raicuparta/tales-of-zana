@@ -41,26 +41,11 @@ require(['module/Player', 'module/Block', 'module/Level', 'lib/phaser.min'],func
     }
 
     function update() {
-
-       
-        //game.physics.arcade.collide(Player.sprite, enemy);
         
         if(gamePaused == false){
-
-           
-            //VOLTAR A METER ISTO
-            /*if (cursors.down.isDown){
-                map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 22], false, layer[1]);
-            } 
-            else {
-                map.setCollision([4, 5, 6, 7, 8, 9, 10, 11, 15, 25], true, layer[1]);
-            }*/
-
             Player.update();
             Block.update();
             Level.update();
-           
-                
         }
 
     }

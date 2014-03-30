@@ -24,7 +24,12 @@ define(['lib/phaser.min'],function() {
 
 	        _map = _game.add.tilemap('level1');
 	        _map.addTilesetImage('tiles-1');
-	        _layer = [_map.createLayer('Background'), _map.createLayer('Solid'), _map.createLayer('Grass1'), _map.createLayer('Grass2')];
+	        _layer = [
+	        	_map.createLayer('Background'),	//layer[0]
+	        	_map.createLayer('Solid'),		//layer[1]
+	        	_map.createLayer('Grass1'),		//layer[2]
+	        	_map.createLayer('Grass2')		//layer[3]
+	        ];
 	        _layer[1].resizeWorld();
 	        _map.setLayer(_layer[1]);
 	        _map.setCollisionByExclusion([], true, _layer[1]);
@@ -42,6 +47,11 @@ define(['lib/phaser.min'],function() {
 
 	    collide: function(object, callback) {
             _game.physics.arcade.collide(object, _layer[1], callback);
+	    },
+
+	    moveGrass: function(x, y) {
+	    	_map.replace(18, 21, _layer[1].getTileX(x), _layer[1].getTileY(y)+1, 1, 1, 'Grass1');
+	    	
 	    }
 
 	}
