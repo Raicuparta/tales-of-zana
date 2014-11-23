@@ -38,10 +38,10 @@ GameMananger.prototype = {
 
 		if (cursors.left.isDown) {
             player.moveLeft();
-        }
-        else if (cursors.right.isDown) {
+        } else if (cursors.right.isDown) {
             player.moveRight();
+        } else {
+        	player.stopWalking();
         }
 	}
-	
 };

@@ -36,6 +36,18 @@ Player.prototype = {
 	moveLeft: function() {
 		spriteMain.body.velocity.x = -speed;
         spriteMain.scale.x = -1;
+	},
+
+	stopWalking: function() {
+		spriteMain.body.velocity.x = 0;
+	},
+
+	getX: function() {
+		return spriteMain.x;
+	}
+
+	getY: function() {
+		return spriteMain.y;
 	}
 	
 };
