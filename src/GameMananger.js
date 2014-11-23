@@ -43,5 +43,9 @@ GameMananger.prototype = {
         } else {
         	player.stopWalking();
         }
+
+        if (cursors.up.isDown) {
+            player.jump();
+        }
 	}
 };

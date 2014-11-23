@@ -48,6 +48,12 @@ Player.prototype = {
 
 	getY: function() {
 		return spriteMain.y;
+	},
+
+	jump: function() {
+		if (spriteMain.body.onFloor()) {
+			spriteMain.body.velocity.y = -400;
+		}
 	}
 	
 };
