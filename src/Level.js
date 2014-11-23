@@ -34,6 +34,10 @@ Level.prototype = {
         this.map.setCollisionByExclusion([], true, this.layer[1]);
 	},
 
+    collide: function(object, callback) {
+            game.physics.arcade.collide(object, this.layer[1], callback);
+    },
+
 	update: function() {
 		
 	}

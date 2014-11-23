@@ -44,6 +44,7 @@ function create() {
     this.game.scale.refresh();
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = 250;
     gameMananger.create();
 }
 
