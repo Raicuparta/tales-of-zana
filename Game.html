@@ -4,7 +4,8 @@
 	<meta charset="iso-8859-1" />
     <title>Tales</title>
 	<script type="text/javascript" src="js/phaser.js"></script>
-	<script type="text/javascript" src="src/Level.js"></script>
+	<script type="text/javascript" src="src/GameMananger.js"></script>
+    <script type="text/javascript" src="src/Level.js"></script>
     <style type="text/css">
         body {
             background-color: white;
@@ -25,9 +26,8 @@
 var game = new Phaser.Game(600, 600, Phaser.Auto, 'phaser-game', {preload: preload, create: create, update: update, render:render });
 
 function preload() {
-
-	level = new Level(game);
-	level.preload();
+	gameMananger = new GameMananger(game);
+	gameMananger.preload();
 }
 
 function create() {
@@ -35,7 +35,7 @@ function create() {
 }
 
 function update() {
-    level.update();
+    gameMananger.update();
 }
 
 function render() {
