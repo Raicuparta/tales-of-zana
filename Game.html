@@ -36,6 +36,10 @@
 var game = new Phaser.Game(1200, 600, Phaser.Auto, 'phaser-game', {preload: preload, create: create, update: update, render:render });
 
 function preload() {
+    game.renderer.roundPixels = true;
+
+    game.stage.smoothed = false;
+    
 	gameMananger = new GameMananger(game);
 	gameMananger.preload();
 }

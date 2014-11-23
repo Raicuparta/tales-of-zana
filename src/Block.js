@@ -12,7 +12,7 @@ Block.prototype = {
 	},
 
 	create: function() {
-		sprite = game.add.sprite(1000, 10, 'sprite');
+		sprite = game.add.sprite(2170, 640, 'sprite');
 		game.physics.enable(sprite, Phaser.Physics.ARCADE);
 	    sprite.body.immovable = true;
 	    sprite.body.setSize(25, 45, 5, 6);
@@ -32,7 +32,7 @@ Block.prototype = {
             player.playSmashDeath();
         }*/
 
-        if (player.getX() >= 200/* && player.getY() > 400*/){
+        if (player.getX() >= 1600 && player.getY() > 400){
             playerNear = true;
         }
 

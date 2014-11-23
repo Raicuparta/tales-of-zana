@@ -22,7 +22,6 @@ GameMananger.prototype = {
 
 		tutorial = new Tutorial(game);
 
-
 	},
 
 	create: function() {
@@ -41,6 +40,8 @@ GameMananger.prototype = {
 		level.update();
 		player.update();
 		block.update();
+
+		level.fallThrough(cursors.down.isDown);
 
 		if (cursors.left.isDown) {
             player.moveLeft();
