@@ -1,0 +1,48 @@
+<!doctype html> 
+<html lang="pt-pt"> 
+<head> 
+	<meta charset="iso-8859-1" />
+    <title>Tales</title>
+	<script type="text/javascript" src="js/phaser.js"></script>
+	<script type="text/javascript" src="src/Level.js"></script>
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+        canvas {
+            margin: 0px auto;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(600, 600, Phaser.Auto, 'phaser-game', {preload: preload, create: create, update: update, render:render });
+
+function preload() {
+
+	level = new Level(game);
+	level.preload();
+}
+
+function create() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+}
+
+function update() {
+    level.update();
+}
+
+function render() {
+   
+}
+
+</script>
+
+</body>
+</html>
