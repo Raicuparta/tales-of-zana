@@ -35,11 +35,10 @@ Level.prototype = {
 	},
 
     collide: function(object, callback) {
-            game.physics.arcade.collide(object, this.layer[1], callback);
+        game.physics.arcade.collide(object, this.layer[1], callback);
     },
 
-	update: function() {
-		
+	update: function() {	
 	}
 	
 };
