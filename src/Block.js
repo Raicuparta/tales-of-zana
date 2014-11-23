@@ -22,7 +22,7 @@ Block.prototype = {
 		level.collide(sprite);
 
 		if (playerNear){
-                sprite.body.velocity.x = -80;
+            sprite.body.velocity.x = -80;
         } 
         else{
             sprite.body.velocity.x = 0;
@@ -31,7 +31,7 @@ Block.prototype = {
         /*if(sprite.body.x <= 1020){
             player.playSmashDeath();
         }*/
-        console.log(player.getX())
+
         if (player.getX() >= 200/* && player.getY() > 400*/){
             playerNear = true;
         }
