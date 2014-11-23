@@ -13,7 +13,7 @@ GameMananger.prototype = {
 	},
 
 	create: function() {
-		level.update();
+		level.create();
 	},
 
 	update: function() {

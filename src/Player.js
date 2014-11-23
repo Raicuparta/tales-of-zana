@@ -1,7 +1,6 @@
 Player = function(game) {
 
 	this.game = game;
-
 };
 
 Player.prototype = {

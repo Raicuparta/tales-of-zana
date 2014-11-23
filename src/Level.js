@@ -18,10 +18,10 @@ Level.prototype = {
 
 	create: function() {
 		this.game.stage.backgroundColor = '#000000';
-        this.background = _game.add.tileSprite(0, 0, 1067, 600, 'background');
+        this.background = this.game.add.tileSprite(0, 0, 1067, 600, 'background');
         this.background.fixedToCamera = true;
 
-        this.map = _game.add.tilemap('level1');
+        this.map = this.game.add.tilemap('level1');
         this.map.addTilesetImage('tiles-1');
         this.layer = [
         	this.map.createLayer('Background'),	//layer[0]

@@ -23,7 +23,7 @@
 
 <script type="text/javascript">
 
-var game = new Phaser.Game(600, 600, Phaser.Auto, 'phaser-game', {preload: preload, create: create, update: update, render:render });
+var game = new Phaser.Game(1200, 600, Phaser.Auto, 'phaser-game', {preload: preload, create: create, update: update, render:render });
 
 function preload() {
 	gameMananger = new GameMananger(game);
@@ -32,6 +32,7 @@ function preload() {
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
+    gameMananger.create();
 }
 
 function update() {
