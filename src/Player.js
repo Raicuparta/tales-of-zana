@@ -44,7 +44,7 @@ Player.prototype = {
 
 	getX: function() {
 		return spriteMain.x;
-	}
+	},
 
 	getY: function() {
 		return spriteMain.y;
