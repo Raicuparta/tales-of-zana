@@ -16,7 +16,7 @@ GameMananger.prototype = {
 		player = new Player(game);
 		player.preload();
 
-		block = new Player(game);
+		block = new Block(game);
 		block.preload();
 	},
 
