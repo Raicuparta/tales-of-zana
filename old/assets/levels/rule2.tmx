@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="11" height="11" tilewidth="48" tileheight="48">
+ <tileset firstgid="1" name="tiles-1" tilewidth="48" tileheight="48">
+  <image source="tiles-1.png" width="528" height="288"/>
+ </tileset>
+ <layer name="regions_input" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxTYUAAFShGZyPLj4KhBwCI4wDZ
+  </data>
+ </layer>
+ <layer name="input_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJzjZUAACQZUgM4fBUMTAABxeAA+
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFEmg0MuDFIjYKBj8AAG88AD4=
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFvGg0MpDAIjYKBj8AAFpEADM=
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAFklBanAETYBMbBYMfAACAdABI
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeSJKgdhQMHgAALNwAGg==
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeMJOgdhQMHgAABwwABA==
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeMJGgdhQMHgAABVQAAw==
+  </data>
+ </layer>
+ <layer name="inputnot_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAeMJKgdhQMHgAAA5wAAg==
+  </data>
+ </layer>
+ <layer name="regions_output" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJxTYUAAFQZUgM4fBUMTAADIdABt
+  </data>
+ </layer>
+ <layer name="output_Solid" width="11" height="11">
+  <data encoding="base64" compression="zlib">
+   eJyTYEAASQZUIM4wCoYDAACGVABJ
+  </data>
+ </layer>
+</map>
