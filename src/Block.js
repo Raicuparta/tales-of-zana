@@ -1,19 +1,17 @@
-Block = function(game) {
+Block = function(g) {
 
-	this.game = game;
-	this.sprite = null,
-	this.active = false,
-	this.soundStepGrass = null
+	game = g;
+	sprite = null;
 };
 
 Block.prototype = {
 
 	preload: function() {
-    	this.game.load.spritesheet('sprite', 'assets/sprites/block.png', 52, 50);
+    	game.load.spritesheet('sprite', 'assets/sprites/block.png', 52, 50);
 	},
 
-	create: function(layer1) {
-
+	create: function() {
+		sprite = game.add.sprite(200, 10, 'sprite');
 	},
 
 	update: function() {
