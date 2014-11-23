@@ -20,6 +20,8 @@ GameMananger.prototype = {
 		block = new Block(game);
 		block.preload();
 
+		tutorial = new Tutorial(game);
+
 
 	},
 
@@ -28,7 +30,11 @@ GameMananger.prototype = {
 		player.create();
 		block.create();
 
+		tutorial.print('Use the arrow keys to move around.', 500, 150, 24);
+
 		cursors = game.input.keyboard.createCursorKeys();
+
+
 	},
 
 	update: function() {
