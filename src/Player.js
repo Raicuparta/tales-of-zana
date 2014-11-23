@@ -14,7 +14,7 @@ Player.prototype = {
 
 	create: function() {
 		
-		spriteMain = game.add.sprite(10, 10, 'spriteMain');
+		spriteMain = game.add.sprite(2000, 600, 'spriteMain');
 		game.physics.enable(spriteMain, Phaser.Physics.ARCADE);
 		spriteMain.anchor.setTo(.5,.5);
 		spriteMain.body.collideWorldBounds = true;
@@ -46,6 +46,10 @@ Player.prototype = {
 
 	getY: function() {
 		return spriteMain.y;
+	},
+
+	follow: function(){
+		game.camera.follow(spriteMain);
 	},
 
 	jump: function() {
