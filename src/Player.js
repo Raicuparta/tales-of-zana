@@ -14,12 +14,12 @@ Player.prototype = {
 
 	create: function() {
 		
-		spriteMain = game.add.sprite(2000, 600, 'spriteMain');
+		spriteMain = game.add.sprite(10, 10, 'spriteMain');
 		game.physics.enable(spriteMain, Phaser.Physics.ARCADE);
 		spriteMain.anchor.setTo(.5,.5);
 		spriteMain.body.collideWorldBounds = true;
         spriteMain.body.setSize(14, 50, 0, 6);
-        game.camera.follow(spriteMain);
+        this.follow();
 	},
 
 	update: function() {
@@ -49,13 +49,22 @@ Player.prototype = {
 	},
 
 	follow: function(){
-		game.camera.follow(spriteMain);
+		//game.camera.follow(spriteMain);
+		game.camera.follow(spriteMain,  Phaser.Camera.STYLE_LOCKON)
 	},
 
 	jump: function() {
 		if (spriteMain.body.onFloor()) {
-			spriteMain.body.velocity.y = -400;
+			spriteMain.body.velocity.y = -350;
 		}
-	}
+	},
+
+	collideBlock: function(object){
+		game.physics.arcade.collide(spriteMain, object);
+    }, 
+
+	render: function() {
+   	        //game.debug.bodyInfo(spriteMain, 16, 24);
+    } 
 	
 };

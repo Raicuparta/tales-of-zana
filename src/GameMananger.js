@@ -54,5 +54,9 @@ GameMananger.prototype = {
         if (cursors.up.isDown) {
             player.jump();
         }
+	},
+
+	render: function(){
+		player.render();
 	}
 };

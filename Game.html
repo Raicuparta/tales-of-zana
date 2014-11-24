@@ -49,7 +49,7 @@ function create() {
     this.game.scale.refresh();
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 250;
+    game.physics.arcade.gravity.y = 1000;
     gameMananger.create();
 }
 
@@ -58,7 +58,7 @@ function update() {
 }
 
 function render() {
-   
+   gameMananger.render();
 }
 
 </script>
