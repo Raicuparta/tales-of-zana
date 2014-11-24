@@ -5,7 +5,7 @@ GameMananger = function(g) {
 	player = null;
 	block = null;
 	cursors = null;
-
+	powerUp = null;
 };
 
 GameMananger.prototype = {
@@ -22,12 +22,16 @@ GameMananger.prototype = {
 
 		tutorial = new Tutorial(game);
 
+		powerUp = new PowerUp(game);
+		powerUp.preload();
+
 	},
 
 	create: function() {
 		level.create();
 		player.create();
 		block.create();
+		powerUp.create();
 
 		tutorial.print('Use the arrow keys to move around.', 500, 150, 24);
 
@@ -40,6 +44,7 @@ GameMananger.prototype = {
 		level.update();
 		player.update();
 		block.update();
+		powerUp.update();
 
 		level.fallThrough(cursors.down.isDown);
 

@@ -231,8 +231,7 @@ define(['module/Level'],function(Level) {
             return _spriteMain.body.y;
         }
 
-
-
+        
     }
 
 });

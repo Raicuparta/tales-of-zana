@@ -7,6 +7,9 @@ Block = function(g) {
 	shakeRate = 8;
 	blockVelocity = 0;
 	blocked = true;
+	fallPowerUp = false;
+	countBlockFalls = 0;
+
 };
 
 Block.prototype = {
@@ -26,7 +29,6 @@ Block.prototype = {
 	update: function() {
 		level.collide(sprite);
 		player.collideBlock(sprite);
-
 		sprite.body.velocity.x = blockVelocity;
 
 		if(sprite.body.blocked.left == true){
@@ -57,6 +59,12 @@ Block.prototype = {
 		    game.camera.y = game.camera.y+rand2;
 		    shakeWorld--;
 		    if (shakeWorld == 0) {
+		    	countBlockFalls++;
+		   		if(countBlockFalls == 2){
+		   			console.log("eajvblak")
+		   			fallPowerUp = true;
+		   			countBlockFalls = 0;
+		   		}
 		    	player.follow();
 		    }
 		}
