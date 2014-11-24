@@ -21,11 +21,8 @@ PowerUp.prototype = {
 	},
 
 	update: function() {
-		console.log("updatePower")
-		/*if(block.fallPowerUp){
-			console.log("eajvblakewgweh")
-			powerUp.body.allowGravity = true;
-		}*/
-		console.log("updatePower")
+		if(block.fallPowerUp){
+			this.powerUp.body.allowGravity = true;
+		}
     }	
 };

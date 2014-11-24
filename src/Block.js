@@ -7,7 +7,7 @@ Block = function(g) {
 	shakeRate = 8;
 	blockVelocity = 0;
 	blocked = true;
-	fallPowerUp = false;
+	this.fallPowerUp = false;
 	countBlockFalls = 0;
 
 };
@@ -60,9 +60,8 @@ Block.prototype = {
 		    shakeWorld--;
 		    if (shakeWorld == 0) {
 		    	countBlockFalls++;
-		   		if(countBlockFalls == 2){
-		   			console.log("eajvblak")
-		   			fallPowerUp = true;
+		   		if(countBlockFalls == 3){
+		   			this.fallPowerUp = true;
 		   			countBlockFalls = 0;
 		   		}
 		    	player.follow();
