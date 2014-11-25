@@ -7,8 +7,6 @@ Block = function(g) {
 	shakeRate = 8;
 	blockVelocity = 0;
 	blocked = true;
-	this.fallPowerUp = false;
-	countBlockFalls = 0;
 
 };
 
@@ -19,7 +17,7 @@ Block.prototype = {
 	},
 
 	create: function() {
-		sprite = game.add.sprite(2170, 640, 'sprite');
+		sprite = game.add.sprite(2170, 668, 'sprite');
 		game.physics.enable(sprite, Phaser.Physics.ARCADE);
 		sprite.body.allowGravity = false;
 	    sprite.body.immovable = true;
@@ -59,16 +57,15 @@ Block.prototype = {
 		    game.camera.y = game.camera.y+rand2;
 		    shakeWorld--;
 		    if (shakeWorld == 0) {
-		    	countBlockFalls++;
-		   		if(countBlockFalls == 3){
-		   			this.fallPowerUp = true;
-		   			countBlockFalls = 0;
-		   		}
 		    	player.follow();
 		    }
 		}
 
     },
+
+    getX: function() {
+		return sprite.x;
+	},
 
      render: function() {
    		//game.debug.body(sprite);

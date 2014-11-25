@@ -14,7 +14,7 @@ Player.prototype = {
 
 	create: function() {
 		
-		spriteMain = game.add.sprite(1500, 400, 'spriteMain');
+		spriteMain = game.add.sprite(1500, 500, 'spriteMain');
 		game.physics.enable(spriteMain, Phaser.Physics.ARCADE);
 		spriteMain.anchor.setTo(.5,.5);
 		spriteMain.body.collideWorldBounds = true;

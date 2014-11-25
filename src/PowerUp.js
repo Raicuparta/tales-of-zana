@@ -21,7 +21,7 @@ PowerUp.prototype = {
 	},
 
 	update: function() {
-		if(block.fallPowerUp){
+		if(this.powerUp.x >= block.getX()){
 			this.powerUp.body.allowGravity = true;
 		}
     }	
