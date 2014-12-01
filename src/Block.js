@@ -36,9 +36,9 @@ Block.prototype = {
 			sprite.body.speed = 0;
 		}
 
-        /*if(sprite.body.x <= 1020){
+        if(sprite.body.x <= 1020){
             player.playSmashDeath();
-        }*/
+        }
 
         if (player.getX() >= 1600 && player.getY() > 400 && blocked){
             blockVelocity = -80;
